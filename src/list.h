@@ -2,7 +2,7 @@
  * FILE: list.h
  * Copyright (C) Lunar Eclipse
  * Description:
- *   A bidirectional linked list with a header node
+ *   A bidirectional circle linked list with a header node
  */
 
 #ifndef LIST_H
