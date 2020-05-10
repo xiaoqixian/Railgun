@@ -58,6 +58,7 @@ int find_timer() {
         time = (time > 0 ? time : 0);
         break;
     }
+    return time;
 }
 
 void handle_expire_timers() {
