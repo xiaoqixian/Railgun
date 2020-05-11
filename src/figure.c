@@ -1,6 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/*
+ * FILE: figure.c
+ * Copyright (C) Lunar Eclipse
+ * Copyright (C) Railgun
+ */
+
+#include "figure.h"
 
 int print_letter(char c) {
     int row, column;
@@ -56,6 +60,100 @@ void print_row(char* str, int row) {
                         break;
                 }
                 break;
+            case 'B':
+                switch (row) {
+                    case 1:
+                        printf(" ____  ");
+                        break;
+                    case 2:
+                        printf("| __ ) ");
+                        break;
+                    case 3:
+                        printf("|  _ \\ ");
+                        break;
+                    case 4:
+                        printf("| |_) |");
+                        break;
+                    case 5:
+                        printf("|____/ ");
+                        break;
+                }
+                break;
+            case 'C':
+                switch (row) {
+                    case 1:
+                        printf("  ____ ");
+                        break;
+                    case 2:
+                        printf(" / ___|");
+                        break;
+                    case 3:
+                        printf("| |    ");
+                        break;
+                    case 4:
+                        printf("| |___ ");
+                        break;
+                    case 5:
+                        printf(" \\____|");
+                        break;
+                }
+                break;
+            case 'D':
+                switch (row) {
+                    case 1:
+                        printf(" ____  ");
+                        break;
+                    case 2:
+                        printf("|  _ \\ ");
+                        break;
+                    case 3:
+                        printf("| | | |");
+                        break;
+                    case 4:
+                        printf("| |_| |");
+                        break;
+                    case 5:
+                        printf("|____/ ");
+                        break;
+                }
+                break;
+            case 'E':
+                switch (row) {
+                    case 1:
+                        printf(" _____ ");
+                        break;
+                    case 2:
+                        printf("| ____|");
+                        break;
+                    case 3:
+                        printf("|  _|  ");
+                        break;
+                    case 4:
+                        printf("| |___ ");
+                        break;
+                    case 5:
+                        printf("|_____|");
+                }
+                break;
+            case 'F':
+                switch (row) {
+                    case 1:
+                        printf(" _____ ");
+                        break;
+                    case 2:
+                        printf("|  ___|");
+                        break;
+                    case 3:
+                        printf("| |_   ");
+                        break;
+                    case 4:
+                        printf("|  _|  ");
+                        break;
+                    case 5:
+                        printf("|_|    ");
+                        break;
+                }
+                break;
             case 'G':
                 switch (row) {
                     case 1:
@@ -75,6 +173,25 @@ void print_row(char* str, int row) {
                         break;
                 }
                 break;
+            case 'H':
+                switch (row) {
+                    case 1:
+                        printf(" _   _ ");
+                        break;
+                    case 2:
+                        printf("| | | |");
+                        break;
+                    case 3:
+                        printf("| |_| |");
+                        break;
+                    case 4:
+                        printf("|  _  |");
+                        break;
+                    case 5:
+                        printf("|_| |_|");
+                        break;
+                }
+                break;
             case 'I':
                 switch (row) {
                     case 1:
@@ -89,6 +206,63 @@ void print_row(char* str, int row) {
                         break;
                     case 5:
                         printf("|____|");
+                        break;
+                }
+                break;
+            case 'J':
+                switch (row) {
+                    case 1:
+                        printf("     _ ");
+                        break;
+                    case 2:
+                        printf("    | |");
+                        break;
+                    case 3:
+                        printf(" _  | |");
+                        break;
+                    case 4:
+                        printf("| |_| |");
+                        break;
+                    case 5:
+                        printf(" \\___/ ");
+                        break;
+                }
+                break;
+            case 'K':
+                switch (row) {
+                    case 1:
+                        printf(" _  __");
+                        break;
+                    case 2:
+                        printf("| |/ /");
+                        break;
+                    case 3:
+                        printf("| ' / ");
+                        break;
+                    case 4:
+                        printf("| | \\ ");
+                        break;
+                    case 5:
+                        printf("|_|\\_\\");
+                        break;
+                }
+                break;
+            case 'M':
+                switch (row) {
+                    case 1:
+                        printf(" __  __ ");
+                        break;
+                    case 2:
+                        printf("|  \\/  |");
+                        break;
+                    case 3:
+                        printf("| |\\/| |");
+                        break;
+                    case 4:
+                        printf("| |  | |");
+                        break;
+                    case 5:
+                        printf("|_|  |_|");
                         break;
                 }
                 break;
@@ -128,6 +302,63 @@ void print_row(char* str, int row) {
                         break;
                 }
                 break;
+            case 'O':
+                switch (row) {
+                    case 1:
+                        printf("  ___  ");
+                        break;
+                    case 2:
+                        printf(" / _ \\ ");
+                        break;
+                    case 3:
+                        printf("| | | |");
+                        break;
+                    case 4:
+                        printf("| |_| |");
+                        break;
+                    case 5:
+                        printf(" \\___/ ");
+                        break;
+                }
+                break;
+            case 'P':
+                switch (row) {
+                    case 1:
+                        printf(" ____  ");
+                        break;
+                    case 2:
+                        printf("|  _ \\ ");
+                        break;
+                    case 3:
+                        printf("| |_) |");
+                        break;
+                    case 4:
+                        printf("|  __/ ");
+                        break;
+                    case 5:
+                        printf("|_|    ");
+                        break;
+                }
+                break;
+            case 'Q':
+                switch (row) {
+                    case 1:
+                        printf("  ___  ");
+                        break;
+                    case 2:
+                        printf(" / _ \\ ");
+                        break;
+                    case 3:
+                        printf("| | | |");
+                        break;
+                    case 4:
+                        printf("| |_| |");
+                        break;
+                    case 5:
+                        printf(" \\__\\_\\");
+                        break;
+                }
+                break;
             case 'R':
                 switch (row) {
                     case 1:
@@ -144,6 +375,42 @@ void print_row(char* str, int row) {
                         break;
                     case 5:
                         printf("|_| \\_\\");
+                        break;
+                }
+                break;
+            case 'S':
+                switch (row) {
+                    case 1:
+                        printf(" ____  ");
+                        break;
+                    case 2:
+                        printf("/ ___| ");
+                        break;
+                    case 3:
+                        printf("\\___ \\ ");
+                        break;
+                    case 4:
+                        printf(" ___) |");
+                        break;
+                    case 5:
+                        printf("|____/ ");
+                        break;
+                }
+                break;
+            case 'T':
+                switch (row) {
+                    case 1:
+                        printf(" _____ ");
+                        break;
+                    case 2:
+                        printf("|_   _|");
+                        break;
+                    case 3:
+                    case 4:
+                        printf("  | |  ");
+                        break;
+                    case 5:
+                        printf("  |_|  ");
                         break;
                 }
                 break;
@@ -164,7 +431,100 @@ void print_row(char* str, int row) {
                         break;
                 }
                 break;
-
+            case 'V':
+                switch (row) {
+                    case 1:
+                        printf("__     __");
+                        break;
+                    case 2:
+                        printf("\\ \\   / /");
+                        break;
+                    case 3:
+                        printf(" \\ \\ / / ");
+                        break;
+                    case 4:
+                        printf("  \\ V /  ");
+                        break;
+                    case 5:
+                        printf("   \\_/   ");
+                        break;
+                }
+                break;
+            case 'W':
+                switch (row) {
+                    case 1:
+                        printf("__        __");
+                        break;
+                    case 2:
+                        printf("\\ \\      / /");
+                        break;
+                    case 3:
+                        printf(" \\ \\ /\\ / / ");
+                        break;
+                    case 4:
+                        printf("  \\ V  V /  ");
+                        break;
+                    case 5:
+                        printf("   \\_/\\_/   ");
+                        break;
+                }
+                break;
+            case 'X':
+                switch (row) {
+                    case 1:
+                        printf("__  __");
+                        break;
+                    case 2:
+                        printf("\\ \\/ /");
+                        break;
+                    case 3:
+                        printf(" \\  / ");
+                        break;
+                    case 4:
+                        printf(" /  \\ ");
+                        break;
+                    case 5:
+                        printf("/_/\\_\\");
+                        break;
+                }
+                break;
+            case 'Y':
+                switch (row) {
+                    case 1:
+                        printf("__   __");
+                        break;
+                    case 2:
+                        printf("\\ \\ / /");
+                        break;
+                    case 3:
+                        printf(" \\ V / ");
+                        break;
+                    case 4:
+                        printf("  | |  ");
+                        break;
+                    case 5:
+                        printf("  |_|  ");
+                }
+                break;
+            case 'Z':
+                switch (row) {
+                    case 1:
+                        printf(" _____");
+                        break;
+                    case 2:
+                        printf("|__  /");
+                        break;
+                    case 3:
+                        printf("  / / ");
+                        break;
+                    case 4:
+                        printf(" / /_ ");
+                        break;
+                    case 5:
+                        printf("/____|");
+                        break;
+                }
+                break;
             default:
                 break;
         }
@@ -178,9 +538,9 @@ void print_row(char* str, int row) {
 void print_str(char* str) {
     int i;
     for (i = 0; i < strlen(str); i++) {
-        if (*(str + i) >= 'Z' || *(str + i) <= 'A') {
-            //fprintf(stderr, "only upper case string supported\n");
-            //return ;
+        if (*(str + i) > 'Z' || *(str + i) < 'A') {
+            fprintf(stderr, "only upper case string supported\n");
+            return ;
         }
     }
     for (i = 1; i <= 5; i++) {
@@ -188,8 +548,4 @@ void print_str(char* str) {
     }
 }
 
-int main() {
-    printf("-----Welcome to Railgun!-----\n");
-    print_str("RAILGUN");
-    return 0;
-}
+

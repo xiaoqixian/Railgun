@@ -10,7 +10,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-/*
 #include <signal.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -19,12 +18,13 @@
 #include "http.h"
 #include "epoll.h"
 #include "threadpool.h"
-*/
+#include "figure.h"
 
 #define CONF "railgun.conf"
 #define RAILGUN_VERSION "1.0"
+#define PROJECT_NAME "RAILGUN"
 
-//extern struct epoll_event* *events;
+extern struct epoll_event* *events;
 
 static const struct option long_options[] = {
     {"help", no_argument, NULL, '?'},
@@ -53,6 +53,7 @@ int main(int argc, char* argv[]) {
     }
     else {
         printf("-----Welcome to railgun!-----");
+        print_str(PROJECT_NAME);
     }
 
     while ((opt = getopt_long(argc, argv, "vc::?h", long_options, &option_index)) != EOF) {
