@@ -34,12 +34,12 @@ static inline void __list_add(struct list_head* _new, struct list_head* prev, st
 }
 
 // add a new entry after the head
-static inline void list_add_after(struct list_head* _new, struct list_head* head) {
+static inline void list_add_head(struct list_head* _new, struct list_head* head) {
     __list_add(_new, head, head->next);
 }
 
-// add a new entry before the head
-static inline void list_add_before(struct list_head* _new, struct list_head* head) {
+// add a new entry after the tail
+static inline void list_add_tail(struct list_head* _new, struct list_head* head) {
     __list_add(_new, head->prev, head);
 }
 
@@ -59,6 +59,7 @@ static inline int list_empty(struct list_head* head) {
     return (head->next == head) && (head->prev == head);
 }
 
+//the priority of -> is higher than &
 #define OFFSET_OF(TYPE, MEMBER) ((size_t) &((TYPE*)0)->MEMBER)
 
 #define CONTAINER_OF(ptr, type, member) ({ \
@@ -66,6 +67,7 @@ static inline int list_empty(struct list_head* head) {
     (type*)((char*)__mptr - OFFSET_OF(type, member));\
 })
 
+//
 #define LIST_ENTRY(ptr, type, member) CONTAINER_OF(ptr, type, member)
 
 #define LIST_FOR_EACH(pos, head) \

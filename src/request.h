@@ -42,7 +42,7 @@ typedef struct request_s {
     void* path_end;
     void* query_start;
     void* query_end;
-    int http_major;
+    int http_major; //of HTTP version
     int http_minor;
     
     struct list_head list;

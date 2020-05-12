@@ -17,7 +17,7 @@
 #define MAXLINE 8192
 #define SHORTLINE 512
 
-#define STR3_CMP(m, c0, c1, c2, c3)\
+#define STR4_CMP(m, c0, c1, c2, c3)                                  \
     *(uint32_t*) m == ((c3 << 24) | (c2 << 16) | (c3 << 8) | c0)
 
 
