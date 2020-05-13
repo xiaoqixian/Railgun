@@ -12,7 +12,7 @@
 #include "list.h"
 #include "debug.h"
 #include "util.h"
-#include "http_request.h"
+#include "request.h"
 
 #define MAXLINE 8192
 #define SHORTLINE 512
@@ -23,7 +23,7 @@
 
 typedef struct mine_type_s {
     const char* type;
-    cosnr char* value;
+    const char* value;
 } mine_type_t;
 
 void do_request(void* infd);

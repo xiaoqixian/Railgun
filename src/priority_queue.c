@@ -6,14 +6,14 @@
 
 #include "priority_queue.h"
 
-int pq_init(pq_t* pq, pq_comparator comp, size_t size) {
+int pq_init(pq_t* pq, pq_comparator_ptr comp, size_t size) {
     pq->queue = (void**)malloc(sizeof(void*) * (size + 1));
     if (!pq->queue) {
         LOG_ERR("pq_init: malloc failed");
         return -1;
     }
     
-    pq->nallloc = 0;
+    pq->nalloc = 0;
     pq->size = size + 1;
     pq->comp = comp;
     

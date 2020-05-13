@@ -7,7 +7,7 @@
 #include "figure.h"
 
 int print_letter(char c) {
-    int row, column;
+    int row;
     if (c == 'R') {
         for (row = 0; row < 5; row++) {
             switch (row) {
@@ -38,7 +38,9 @@ int print_letter(char c) {
 
 void print_row(char* str, int row) {
     char c;
-    for (int i = 0; i < strlen(str); i++) {
+    int i;
+    int len = (int)strlen(str);
+    for (i = 0; i < len; i++) {
         c = *(str + i);
         switch (c) {
             case 'A':
@@ -537,7 +539,8 @@ void print_row(char* str, int row) {
 //only upper case supported
 void print_str(char* str) {
     int i;
-    for (i = 0; i < strlen(str); i++) {
+    int len = (int)strlen(str);
+    for (i = 0; i < len; i++) {
         if (*(str + i) > 'Z' || *(str + i) < 'A') {
             fprintf(stderr, "only upper case string supported\n");
             return ;

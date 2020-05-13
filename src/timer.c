@@ -13,7 +13,7 @@ static int timer_comp(void* ti, void* tj) {
     return (timeri->key < timerj->key) ? 1 : 0;
 }
 
-pq_t* timer;
+pq_t timer;
 size_t current_msec;
 
 static void time_update() {
@@ -30,6 +30,7 @@ static void time_update() {
 int timer_init() {
     int res;
     res = pq_init(&timer, timer_comp, PQ_DEFAULT_SIZE);
+    CHECK(res == 0, "timer_init");
     
     time_update();
     return OK;
@@ -54,7 +55,7 @@ int find_timer() {
         }
         
         time = (int)(t_node->key - current_msec);
-        DEBUG("in find_timer, key = %zu, cur = %zu", t_node->key);
+        DEBUG("in find_timer, key = %zu, cur = %zu", t_node->key, current_msec);
         time = (time > 0 ? time : 0);
         break;
     }
@@ -84,7 +85,7 @@ void handle_expire_timers() {
         }
         
         if (t_node->handler) {
-            t_node->handler(t_node->pq);
+            t_node->handler(t_node->rq);
         }
         
         res = pq_delmin(&timer);
@@ -93,7 +94,7 @@ void handle_expire_timers() {
     }
 }
 
-void add_timer(http_req_t* rq, size_t timeout, timer_handler handler) {
+void add_timer(request_t* rq, size_t timeout, timer_handler handler) {
     int res;
     timer_node* t_node = (timer_node*)malloc(sizeof(timer_node));
     CHECK(t_node != NULL, "add_timer: malloc failed");
@@ -111,10 +112,10 @@ void add_timer(http_req_t* rq, size_t timeout, timer_handler handler) {
     CHECK(res == 0, "add_timer: pq_insert error");
 }
 
-void del_timer(http_req_t* rq) {
+void del_timer(request_t* rq) {
     DEBUG("in del_timer");
     time_update();
     timer_node* t_node = rq->timer;
-    CHECK(timer_node != NULL, "del_timer: rq->timer is NULL");
+    CHECK(t_node != NULL, "del_timer: rq->timer is NULL");
     t_node->deleted = 1;
 }

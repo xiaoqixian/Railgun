@@ -30,6 +30,7 @@ typedef struct {
     pthread_cond_t cond; //condition variable
     pthread_t* threads; //thread_t type array
     
+    task_t* head;
     int thread_count; //thread number in the threadpool
     int queue_size;  //task number in the task queue
     int shutdown;   /*indicate if the threadpool is shutdown. Shutdown fall into two categories[immediate_shutdown, graceful_shutdown], immediate_shutdown means the threadpool has to shutdown no matter if there are tasks or not, graceful_shutdown will wait until all tasks are executed. */
@@ -38,10 +39,10 @@ typedef struct {
 
 typedef enum {
     tp_invalid = -1,
-    tp_lock_fail = -2;
-    tp_already_shutdown = -3;
-    tp_cond_broadcast = -4;
-    tp_thread_fail = -5;
+    tp_lock_fail = -2,
+    tp_already_shutdown = -3,
+    tp_cond_broadcast = -4,
+    tp_thread_fail = -5,
 } threadpool_error_t;
 
 threadpool_t* threadpool_init(int thread_num);
@@ -52,4 +53,6 @@ int threadpool_destory(threadpool_t* pool, int graceful);
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif

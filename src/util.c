@@ -100,7 +100,7 @@ int read_conf(char* filename, conf_t* cf, char* buf, int len) {
             cf->root = delim_pos + 1;
         }
         
-        if (stnrcmp("port", cur_pos, 4) == 0) {
+        if (strncmp("port", cur_pos, 4) == 0) {
             cf->port = atoi(delim_pos + 1); //atio() transfer string into integer
         }
         

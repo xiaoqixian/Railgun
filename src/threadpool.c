@@ -21,7 +21,7 @@ threadpool_t* threadpool_init(int thread_num) {
     }
     
     threadpool_t* pool;
-    if ((pool = (threadpool_t*)malloc(sizeof(struct threadpool_t))) == NULL) {
+    if ((pool = (threadpool_t*)malloc(sizeof(threadpool_t))) == NULL) {
         goto ERR;
     }
     
@@ -30,7 +30,7 @@ threadpool_t* threadpool_init(int thread_num) {
     pool->shutdown = 0;
     pool->started = 0;
     pool->threads = (pthread_t*)malloc(sizeof(pthread_t) * thread_num);
-    pool->head = (task_t*)malloc(sizeof(struct task_t)); //dummy head
+    pool->head = (task_t*)malloc(sizeof(task_t)); //dummy head
     
     if ((pool->threads == NULL) || (pool->head == NULL)) {
         goto ERR;
@@ -45,14 +45,14 @@ threadpool_t* threadpool_init(int thread_num) {
     }
     
     if (pthread_cond_init(&(pool->cond), NULL) != 0) {
-        pthread_mutex_destory(&(pool->lock));
+        pthread_mutex_destroy(&(pool->lock));
         goto ERR;
     }
     
     int i;
     for (i = 0; i < thread_num; i++) {
         if (pthread_create(&(pool->threads[i]), NULL, threadpool_worker, (void*)pool) != 0) {
-            threadpool_destory(pool, 0);
+            threadpool_destroy(pool, 0);
             return NULL;
         }
         //output the thread id as an 8-bit hexadecimal number
@@ -135,13 +135,13 @@ int threadpool_free(threadpool_t* pool) {
     return 0;
 }
 
-//destory the threadpool
-int threadpool_destory(threadpool_t* pool, int graceful) {
+//destroy the threadpool
+int threadpool_destroy(threadpool_t* pool, int graceful) {
     int err = 0;
     
     if (pool == NULL) {
         LOG_ERR("pool is NULL");
-        return tp_invald; //tp_invalid is in enum
+        return tp_invalid; //tp_invalid is in enum
     }
     
     if (pthread_mutex_lock(&(pool->lock)) != 0) {
@@ -150,7 +150,7 @@ int threadpool_destory(threadpool_t* pool, int graceful) {
     
     do {
         if (pool->shutdown) {
-            err = tp->already_shutdown;
+            err = tp_already_shutdown;
             break;
         }
         
@@ -176,8 +176,8 @@ int threadpool_destory(threadpool_t* pool, int graceful) {
     } while (0);
      
     if (!err) {
-        pthread_mutex_destory(&(pool->lock));
-        pthread_cond_destory(&(pool->cond));
+        pthread_mutex_destroy(&(pool->lock));
+        pthread_cond_destroy(&(pool->cond));
         threadpool_free(pool);
     }
     

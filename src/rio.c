@@ -8,7 +8,7 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
-#include "dbg.h"
+#include "debug.h"
 #include "rio.h"
 
 //rio_readn - robustly read n bytes (unbuffered)
@@ -114,7 +114,7 @@ ssize_t rio_readnb(rio_t* rp, void* buf, size_t n) {
     
     while (nleft > 0) {
         if ((nread = rio_read(rp, bufp, nleft)) < 0) {
-            if (errno == NULL)
+            if (errno == EINTR)
                 nread = 0;
             else
                 return -1;

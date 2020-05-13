@@ -30,12 +30,12 @@ header_handle_t http_headers_in[] = {
     {"Connection", process_connection},
     {"If-Modified-Since", process_if_modified_since},
     {"", process_ignore}
-}
+};
 
-int init_request_t(request_t* req, int fd, int epfd, conf_t* cf) {
+int init_request(request_t* req, int fd, int epfd, conf_t* cf) {
     req->fd = fd;
     req->epfd = epfd;
-    req->pos = r->last = 0;
+    req->pos = req->last = 0;
     req->state = 0;
     req->root = cf->root;
     INIT_LIST_HEAD(&(req->list));
@@ -113,7 +113,7 @@ static int process_connection(request_t* req, http_out_t* out, char* data, int l
 }
 
 static int process_if_modified_since(request_t* req, http_out_t* out, char* data, int len) {
-    (void) r;
+    (void) req;
     (void) len;
     
     struct tm tm; //struct tm is defined in <time.h>

@@ -14,17 +14,17 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include "util.h"
-#include "timeer.h"
+#include "timer.h"
 #include "http.h"
 #include "epoll.h"
 #include "threadpool.h"
 #include "figure.h"
 
-#define CONF "railgun.conf"
+#define CONF "../conf/railgun.conf"
 #define RAILGUN_VERSION "1.0"
 #define PROJECT_NAME "RAILGUN"
 
-extern struct epoll_event* *events;
+extern struct epoll_event* events;
 
 static const struct option long_options[] = {
     {"help", no_argument, NULL, '?'},
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
         printf("-----Welcome to railgun!-----\n" "Use <-h> option to get more information\n");
     }
     else {
-        printf("-----Welcome to railgun!-----");
+        printf("-----Welcome to railgun!-----\n");
         print_str(PROJECT_NAME);
     }
 
@@ -111,18 +111,18 @@ int main(int argc, char* argv[]) {
     
     listen_fd = open_listenfd(cf.port);
     res = make_socket_non_blocking(listen_fd);
-    CHECK(res == 0, :"make_socket_non_blocking");
+    CHECK(res == 0, "make_socket_non_blocking");
     
     //create epoll and add listen_fd to epoll
-    int epfd = epoll_create(0);
+    int epfd = rg_epoll_create(0);
     struct epoll_event event;
     
-    request_t* req = (request_t*)malloc(sizeof(struct request_t));
+    request_t* req = (request_t*)malloc(sizeof(request_t));
     init_request(req, listen_fd, epfd, &cf);
     
     event.data.ptr = (void*)req;
     event.events = EPOLLIN | EPOLLET;
-    epoll_add(epfd, listen_fd, &event);
+    rg_epoll_add(epfd, listen_fd, &event);
     
     //create thread pool
     timer_init();
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
     while (1) {
         time = find_timer();
         DEBUG("wait time = %d", time);
-        n = epoll_wait(epfd, events, MAXEVENTS, time);
+        n = rg_epoll_wait(epfd, events, MAXEVENTS, time);
         handle_expire_timers();
         
         for (i = 0; i < n; i++) {
@@ -160,17 +160,17 @@ int main(int argc, char* argv[]) {
                     CHECK(res == 0, "make_socket_non_blocking");
                     LOG_INFO("new connectino fd %d", infd);
                     
-                    request_t* request = (request_t*)malloc(sizeof(struct request_t));
+                    request_t* request = (request_t*)malloc(sizeof(request_t));
                     if (request == NULL) {
                         LOG_ERR("malloc request_t failed");
                         break;
                     }
                     
-                    init_reuqest(request, infd, epfd, &cf);
+                    init_request(request, infd, epfd, &cf);
                     event.data.ptr = (void*)request;
                     event.events = EPOLLIN | EPOLLET | EPOLLONESHOT;
 
-                    epoll_add(epfd, infd, &event);
+                    rg_epoll_add(epfd, infd, &event);
                     add_timer(request, TIMEOUT_DEFAULT, http_close_conn);
                 }
             }

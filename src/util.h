@@ -28,7 +28,7 @@ struct conf_s {
 typedef struct conf_s conf_t;
 
 int open_listenfd(int port);
-int make_sock_non_blocking(int fd);
+int make_socket_non_blocking(int fd);
 
 int read_conf(char* filename, conf_t* cf, char* buf, int len);
 

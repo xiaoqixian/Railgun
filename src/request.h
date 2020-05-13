@@ -9,6 +9,8 @@
 #include <time.h>
 #include "http.h"
 
+#define AGAIN EAGAIN
+
 #define HTTP_PARSE_INVALID_METHOD 10
 #define HTTP_PARSE_INVALID_REQUEST 11
 #define HTTP_PARSE_INVALID_HEADER 12
@@ -34,6 +36,7 @@ typedef struct request_s {
     size_t pos, last;
     int state;
     void* req_start;
+    void* req_end;
     void* method_end;
     int method;
     void* uri_start;

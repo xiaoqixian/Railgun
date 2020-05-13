@@ -25,8 +25,9 @@ int parse_request_line(request_t* req) {
         re_first_major_digit,
         re_major_digit,
         re_first_minor_digit,
+        re_minor_digit,
         re_spaces_after_digit,
-        re_almots_done
+        re_almost_done
     } state;
     
     state = req->state;
@@ -37,7 +38,7 @@ int parse_request_line(request_t* req) {
         
         switch (state) {
             case re_start:
-                req->request_start = p;
+                req->req_start = p;
                 
                 if (ch == CR || ch == LF) {
                     break;
@@ -53,7 +54,7 @@ int parse_request_line(request_t* req) {
             case re_method:
                 if (ch == ' ') { //A space indicates the method name has ended.
                     req->method_end = p;
-                    m = req->request_start;
+                    m = req->req_start;
                     
                     switch (p - m) {
                         case 3: //if the length of the method name is 3
@@ -234,7 +235,7 @@ int parse_request_line(request_t* req) {
                 break;
             
             case re_almost_done:
-                req->request_end = p - 1;
+                req->req_end = p - 1;
                 switch (ch) {
                     case LF:
                         goto DONE;
@@ -252,8 +253,8 @@ int parse_request_line(request_t* req) {
 DONE:
     req->pos = pi + 1;
     
-    if (req->request_end == NULL) {
-        req->request_end = p;
+    if (req->req_end == NULL) {
+        req->req_end = p;
     }
     
     req->state = re_start;
@@ -304,7 +305,7 @@ int parse_request_body(request_t* req) {
                 
                 if (ch == ':') {
                     req->cur_header_key_end = p;
-                    state = re_spaces_after_clon;
+                    state = re_spaces_after_colon;
                     break;
                 }
                 break;
@@ -313,12 +314,12 @@ int parse_request_body(request_t* req) {
                 if (ch == ' ') {
                     break;
                 }
-                else if (ch == ':') {
+                if (ch == ':') {
                     state = re_spaces_after_colon;
                     break;
                 }
                 else {
-                    return ZV_HTTP_PARSE_INVALID_HEADER;
+                    return HTTP_PARSE_INVALID_HEADER;
                 }
                 
             case re_spaces_after_colon:
@@ -346,7 +347,7 @@ int parse_request_body(request_t* req) {
                 if (ch == LF) {
                     state = re_crlf;
                     //save the current http header
-                    hd = (header_t*)malloc(sizeof(struct header_t));
+                    hd = (header_t*)malloc(sizeof( header_t));
                     hd->key_start = req->cur_header_key_start;
                     hd->key_end = req->cur_header_key_end;
                     hd->value_start = req->cur_header_value_start;
@@ -357,7 +358,7 @@ int parse_request_body(request_t* req) {
                     break;
                 }
                 else {
-                    return ZV_HTTP_PARSE_INVALID_HEADER;
+                    return HTTP_PARSE_INVALID_HEADER;
                 }
                 
             case re_crlf:
@@ -375,7 +376,7 @@ int parse_request_body(request_t* req) {
                     case LF:
                         goto DONE;
                     default:
-                        return ZV_HTTP_PARSE_INVALID_HEADER;
+                        return HTTP_PARSE_INVALID_HEADER;
                 }
                 break;
         }
