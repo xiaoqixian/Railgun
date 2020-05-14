@@ -8,6 +8,14 @@
 
 [TOC]
 
+#### **Run**
+
+Make sure you already have installed gcc/g++ compiler and cmake tool.
+
+1. `mkdir build && cd build`
+2. `cmake ..`
+3. `make all`
+
 #### **diagram**
 
 ```mermaid
