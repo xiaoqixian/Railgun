@@ -83,6 +83,8 @@ void do_request(void* ptr) {
         req->last += n;
         CHECK(req->last - req->pos < MAX_BUF, "request buffer overflow");
         
+        fprintf(stderr, "request header:\n%s", req->buf);
+
         LOG_INFO("ready to parse request line");
 
         res = parse_request_line(req);
@@ -163,9 +165,11 @@ CLOSE:
     CHECK(res == 0, "do_request: http_close_conn");
 }
 
+
 static void parse_uri(char* uri, int uri_length, char* filename, char* querystring) {
     CHECK(uri != NULL, "parse_uri: uri is NULL");
     uri[uri_length] = '\0';
+    LOG_INFO("uri to parse is %s", uri);
     
     char* question_mark = strchr(uri, '?');//return a char pointer to where the first place the '?' character appeared
     int file_length;
@@ -193,6 +197,7 @@ static void parse_uri(char* uri, int uri_length, char* filename, char* querystri
     DEBUG("before strncat filename = %s, uri = %.*s, file_len = %d", filename, file_length, uri, file_length);
     strncat(filename, uri, file_length);
     
+    LOG_INFO("after strncat filename = %s", filename);
     char* last_comp = strrchr(filename, '/');//return a char pointer to where the last place '/' character appeared
     char* last_dot = strrchr(last_comp, '.');
     if (last_dot == NULL && filename[strlen(filename) - 1] != '/') {

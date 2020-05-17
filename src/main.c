@@ -26,6 +26,8 @@
 
 extern struct epoll_event* events;
 
+typedef void (*do_req_ptr)(void* infd);
+
 static const struct option long_options[] = {
     {"help", no_argument, NULL, '?'},
     {"version", no_argument, NULL, 'v'},
@@ -42,19 +44,15 @@ static void give_options() {
            );
 }
 
+
 int main(int argc, char* argv[]) {
     int res, opt = 0;
     int option_index = 0;
     char* conf_file = CONF;
     
     //parse command line arguments
-    if (argc == 1) {
-        printf("-----Welcome to railgun!-----\n" "Use <-h> option to get more information\n");
-    }
-    else {
-        printf("-----Welcome to railgun!-----\n");
-        print_str(PROJECT_NAME);
-    }
+    printf("-----Welcome to railgun!-----\n");
+    print_str(PROJECT_NAME);
 
     while ((opt = getopt_long(argc, argv, "vc::?h", long_options, &option_index)) != EOF) {
         switch (opt) {
@@ -125,6 +123,10 @@ int main(int argc, char* argv[]) {
     rg_epoll_add(epfd, listen_fd, &event);
     
     //create thread pool
+    threadpool_t* tp = threadpool_init(cf.thread_num);
+    CHECK(tp != NULL, "threadpool init error");
+    
+    //timer init
     timer_init();
     LOG_INFO("railgun started");
     int n;
@@ -184,9 +186,15 @@ int main(int argc, char* argv[]) {
                 }
                 LOG_INFO("new data from fd %d", fd);
                 
-                do_request(events[i].data.ptr);
+                do_req_ptr do_request_ptr = do_request;
+                res = threadpool_add(tp, do_request_ptr, events[i].data.ptr);
+                LOG_INFO("add a new task to threadpool");
+                CHECK(res == 0, "threadpool_addr error");
             }
         }
+    }
+    if (threadpool_destroy(tp, 1) < 0) {
+        LOG_ERR("threadpool destroy error");
     }
 
     return 0;

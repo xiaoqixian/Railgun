@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <netinet/in.h>
-#include <pthread.h>
 
 #define PORT 9090
 #define BACKLOG 2

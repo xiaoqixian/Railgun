@@ -49,7 +49,7 @@ threadpool_t* threadpool_init(int thread_num);
 
 int threadpool_add(threadpool_t* pool, void (*func)(void*), void* arg);
 
-int threadpool_destory(threadpool_t* pool, int graceful);
+int threadpool_destroy(threadpool_t* pool, int graceful);
 
 #ifdef __cplusplus
 }

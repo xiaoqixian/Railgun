@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef NO_DEBUG
+#ifdef NDEBUG
 #define DEBUG(M, ...)
 
 #else
