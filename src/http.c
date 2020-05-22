@@ -278,6 +278,7 @@ static void serve_static(int fd, char* filename, size_t filesize, http_out_t* ou
     close(srcfd);
     
     n = rio_writen(fd, srcaddr, filesize);
+    CHECK(n == filesize, "rio_writen error, errno = %d", errno);
     
     munmap(srcaddr, filesize);
     

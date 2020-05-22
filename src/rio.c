@@ -21,6 +21,9 @@ ssize_t rio_readn(int fd, void* buf, size_t n) {
         if ((nread = read(fd, bufp, nleft)) < 0) {
             if (errno == EINTR) //does not read anything because of interrupt signals
                 nread = 0;
+            else if (errno == EAGAIN) {
+                continue;
+            }
             else {
                 LOG_ERR("errno = %d\n", errno);
                 return -1;
@@ -44,6 +47,10 @@ ssize_t rio_writen(int fd, void* buf, size_t n) {
         if ((nwrite = write(fd, bufp, nleft)) <= 0) {
             if (errno = EINTR)
                 nwrite = 0;
+            else if (errno == EAGAIN) {
+                nwrite = 0;
+                continue;
+            }
             else {
                 LOG_ERR("errno = %d\n", errno);
                 return -1;
